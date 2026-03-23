@@ -1,12 +1,23 @@
 <section class="home-page">
   <section class="hero">
     <div class="hero-copy">
-      <p class="eyebrow">UNDER 2 KM FROM YOUR LOCATION</p>
-      <h1>Find the right rental for your day, week or month.</h1>
+      <p class="eyebrow">DIRECT LANDLORD ACCOMMODATION</p>
+      <h1>Find hostels, flats, apartments and villas for daily, weekly or monthly rent.</h1>
       <p class="hero-text">
-        Browse bikes, cars, hostels and everyday essentials in Jabalpur with a fast,
-        familiar marketplace flow.
+        Unio helps tenants discover suitable accommodation directly from landlords,
+        compare facilities, understand house rules, and choose flexible stay durations with confidence.
       </p>
+
+      <div class="platform-points">
+        @for (point of platformHighlights; track point) {
+          <p>{{ point }}</p>
+        }
+      </div>
+
+      <div class="hero-actions">
+        <a class="primary-action" routerLink="/quick-rent">Explore rentals</a>
+        <a class="secondary-action" routerLink="/accessories">Accessories</a>
+      </div>
     </div>
 
     <div class="hero-panel">
@@ -42,13 +53,13 @@
 
       <label class="search-bar">
         <span class="sr-only">Search</span>
-        <input type="text" value="Find Bike, Car, Hostels or More..." />
+        <input type="text" value="Find hostels, flats, apartments, villas..." />
         <button type="button" aria-label="Search">Go</button>
       </label>
     </div>
   </section>
 
-  <div class="breadcrumbs">Home/Hostels/Hostels in Jabalpur Madhya Pradesh</div>
+  <div class="breadcrumbs">Home/Rentals/Accommodation in Jabalpur Madhya Pradesh</div>
 
   <section class="listing-grid">
     @for (listing of listings; track listing.title) {
@@ -84,5 +95,25 @@
         <div class="discovery-overlay">{{ tile.title }}</div>
       </article>
     }
+  </section>
+
+  <section class="accessories-strip">
+    <div class="section-copy">
+      <p class="section-tag">Add-on rentals</p>
+      <h2>Need essentials after booking?</h2>
+      <p>Rent fridge, washing machine, sofa bed and other accessories as a separate add-on for your stay.</p>
+    </div>
+
+    <div class="accessory-mini-grid">
+      @for (item of accessories; track item.name) {
+        <article class="accessory-mini-card">
+          <img [src]="item.image" [alt]="item.name" />
+          <div>
+            <strong>{{ item.name }}</strong>
+            <p>{{ item.rent }}</p>
+          </div>
+        </article>
+      }
+    </div>
   </section>
 </section>

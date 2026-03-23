@@ -98,6 +98,12 @@
   color: #1c3553;
 }
 
+.property-chip {
+  margin-top: 10px;
+  color: #4f6880;
+  font-weight: 700;
+}
+
 .rating-row {
   display: flex;
   flex-wrap: wrap;
@@ -187,6 +193,23 @@
 
 .spec-grid strong {
   color: #213547;
+}
+
+.feedback-panel {
+  margin-top: 20px;
+}
+
+.feedback-list {
+  display: grid;
+  gap: 12px;
+}
+
+.feedback-list p {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #36506b;
 }
 
 .related-section {

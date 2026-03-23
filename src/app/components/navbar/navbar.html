@@ -1,35 +1,50 @@
 <header class="navbar">
-  <button type="button" class="menu-btn" aria-label="Open menu" (click)="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+  <div class="nav-top">
+    <div class="brand-zone">
+      <button type="button" class="menu-btn" aria-label="Open menu" (click)="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
-  <a class="brand" routerLink="/" (click)="closeMenu()">
-    <span class="brand-mark">U</span>
-    <span class="brand-text">Unio</span>
-  </a>
+      <a class="brand" routerLink="/" (click)="closeMenu()">
+        <img src="/unio-logo.png" alt="Unio logo" class="brand-logo" />
+        <div class="brand-copy">
+          <strong>Accommodation rentals</strong>
+          <span>Directly from landlords for flexible stays</span>
+        </div>
+      </a>
+    </div>
 
-  <div class="search-tools">
-    <label class="toolbar-pill">
-      <span>1 Day,</span>
-      <input type="text" value="Jabalpur" />
-    </label>
+    <div class="context-strip">
+      <div class="context-card">
+        <span class="context-label">Duration</span>
+        <strong>Daily, Weekly, Monthly</strong>
+      </div>
 
-    <label class="toolbar-search">
-      <input type="text" value="Find Bike, Car, Hostels or More...." />
-    </label>
+      <div class="context-card">
+        <span class="context-label">Location</span>
+        <strong>Jabalpur, Madhya Pradesh</strong>
+      </div>
+    </div>
+
+    <div class="auth-actions">
+      <a routerLink="/login" class="ghost-btn" (click)="closeMenu()">Log in</a>
+      <a routerLink="/signup" class="primary-btn" (click)="closeMenu()">Register</a>
+    </div>
   </div>
 
-  <nav class="nav-links" aria-label="Primary navigation">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">home</a>
-    <a routerLink="/quick-rent" routerLinkActive="active" (click)="closeMenu()">Rentals</a>
-    <a routerLink="/help" routerLinkActive="active" (click)="closeMenu()">more</a>
-  </nav>
+  <div class="nav-bottom">
+    <label class="toolbar-search">
+      <span class="search-label">Search rentals</span>
+      <input type="text" value="Hostels, flats, apartments, villas..." />
+    </label>
 
-  <div class="auth-actions">
-    <a routerLink="/login" class="ghost-btn" (click)="closeMenu()">Log in</a>
-    <a routerLink="/signup" class="primary-btn" (click)="closeMenu()">Register</a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a routerLink="/quick-rent" routerLinkActive="active" (click)="closeMenu()">Rentals</a>
+      <a routerLink="/accessories" routerLinkActive="active" (click)="closeMenu()">Accessories</a>
+      <a routerLink="/help" routerLinkActive="active" (click)="closeMenu()">About</a>
+    </nav>
   </div>
 </header>
 
@@ -41,16 +56,16 @@
       <div class="avatar">N</div>
       <div>
         <h2>Name</h2>
-        <p>+91 9406925520</p>
+        <p>Flexible rental seeker</p>
       </div>
     </div>
 
     <nav class="drawer-links">
-      <a routerLink="/coins" (click)="closeMenu()">Unio Coins</a>
+      <a routerLink="/quick-rent" (click)="closeMenu()">Accommodation</a>
+      <a routerLink="/accessories" (click)="closeMenu()">Accessories</a>
       <a routerLink="/orders" (click)="closeMenu()">My Orders</a>
-      <a routerLink="/help" (click)="closeMenu()">Help</a>
-      <a routerLink="/quick-rent" (click)="closeMenu()">install unio mobile app</a>
-      <a routerLink="/settings" (click)="closeMenu()">Setting</a>
+      <a routerLink="/help" (click)="closeMenu()">About platform</a>
+      <a routerLink="/settings" (click)="closeMenu()">Settings</a>
       <a routerLink="/login" (click)="closeMenu()">Log out</a>
     </nav>
   </aside>

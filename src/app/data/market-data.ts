@@ -6,6 +6,7 @@ export type Category = {
 export type RentalListing = {
   id: string;
   title: string;
+  propertyType: string;
   price: number;
   dailyPrice: number;
   unit: string;
@@ -21,6 +22,13 @@ export type OrderItem = {
   status: 'Active' | 'Completed' | 'Upcoming';
   duration: string;
   amount: string;
+};
+
+export type AccessoryItem = {
+  name: string;
+  rent: string;
+  summary: string;
+  image: string;
 };
 
 const createArt = (topColor: string, bottomColor: string, label: string): string => {
@@ -50,10 +58,10 @@ const createArt = (topColor: string, bottomColor: string, label: string): string
 };
 
 export const quickFilters: Category[] = [
-  { icon: '2W', label: 'Bike' },
-  { icon: '4W', label: 'Car' },
-  { icon: 'ST', label: 'Sofa' },
-  { icon: 'HS', label: 'Hostels' }
+  { icon: 'HS', label: 'Hostels' },
+  { icon: 'FL', label: 'Flats' },
+  { icon: 'AP', label: 'Apartments' },
+  { icon: 'VL', label: 'Villas' }
 ];
 
 const roomArt = createArt('#dbeafe', '#93c5fd', 'Room View');
@@ -71,88 +79,96 @@ export const rentalListings: RentalListing[] = [
   {
     id: 'ganga-jamna-boys-hostel',
     title: '1 BHK Hostel, fully furnished',
+    propertyType: 'Hostel',
     price: 4500,
     dailyPrice: 250,
     unit: '/month',
-    summary: 'Comfortable private stay with wardrobe, AC and attached washroom.',
+    summary: 'Comfortable private stay with wardrobe, AC, attached washroom and landlord-approved stay terms.',
     location: 'Jabalpur, M.P.',
     image: roomArt,
     rating: 4
   },
   {
-    id: 'study-cabin-hostel',
-    title: '1 BHK Hostel with study cabin',
-    price: 4000,
-    dailyPrice: 220,
+    id: 'family-flat-near-civil-lines',
+    title: '2 BHK flat with study space',
+    propertyType: 'Flat',
+    price: 12000,
+    dailyPrice: 950,
     unit: '/month',
-    summary: 'Bright room setup with work desk, fresh linen and natural light.',
+    summary: 'Bright family flat with work desk, balcony access and natural light.',
     location: 'Civil Lines, Jabalpur',
     image: roomArt,
     rating: 4,
     badge: 'Popular'
   },
   {
-    id: 'twin-sharing-room',
-    title: '2 beds in one room with attached bath',
+    id: 'student-sharing-hostel',
+    title: '2 bed sharing hostel room',
+    propertyType: 'Hostel',
     price: 2500,
-    dailyPrice: 160,
+    dailyPrice: 180,
     unit: '/month',
-    summary: 'Budget-friendly twin sharing option near coaching and transit.',
+    summary: 'Budget-friendly twin sharing option near coaching centers and public transit.',
     location: 'Napier Town, Jabalpur',
     image: roomArt,
     rating: 3
   },
   {
-    id: 'student-bunk-room',
-    title: 'Student bunk room, fully furnished',
-    price: 4500,
-    dailyPrice: 275,
+    id: 'studio-apartment-near-market',
+    title: 'Studio apartment, fully furnished',
+    propertyType: 'Apartment',
+    price: 9500,
+    dailyPrice: 700,
     unit: '/month',
-    summary: 'Clean bunk setup with storage, cooler and quick access to markets.',
+    summary: 'Compact apartment with storage, kitchen setup and quick access to markets.',
     location: 'Wright Town, Jabalpur',
     image: bunkArt,
     rating: 4
   },
   {
-    id: 'compact-studio-room',
-    title: 'Compact studio room near city center',
-    price: 4500,
-    dailyPrice: 240,
+    id: 'apartment-city-center',
+    title: '1 BHK apartment near city center',
+    propertyType: 'Apartment',
+    price: 11000,
+    dailyPrice: 850,
     unit: '/month',
-    summary: 'Modern essentials for solo renters who want a central location.',
+    summary: 'Modern apartment for solo renters or couples who want a central location.',
     location: 'Sadar, Jabalpur',
     image: roomArt,
     rating: 4
   },
   {
-    id: 'minimal-room-desk',
-    title: 'Minimal room with wardrobe and desk',
-    price: 4300,
-    dailyPrice: 235,
+    id: 'independent-flat-with-desk',
+    title: 'Independent flat with wardrobe and desk',
+    propertyType: 'Flat',
+    price: 9800,
+    dailyPrice: 780,
     unit: '/month',
-    summary: 'Quiet street-facing room ideal for interns and students.',
+    summary: 'Quiet street-facing flat ideal for interns, professionals and students.',
     location: 'Katanga, Jabalpur',
     image: roomArt,
     rating: 3
   },
   {
-    id: 'shared-kitchen-private-room',
-    title: 'Shared kitchen with private room',
-    price: 4500,
-    dailyPrice: 245,
+    id: 'gated-apartment-with-kitchen',
+    title: 'Gated apartment with private kitchen',
+    propertyType: 'Apartment',
+    price: 13500,
+    dailyPrice: 980,
     unit: '/month',
-    summary: 'Private room plus fitted kitchen access in a gated property.',
+    summary: 'Private apartment with fitted kitchen in a secure gated property.',
     location: 'Adhartal, Jabalpur',
     image: kitchenArt,
     rating: 4
   },
   {
-    id: 'apartment-block-stay',
-    title: 'Apartment block stay for long term',
-    price: 4500,
-    dailyPrice: 260,
+    id: 'villa-stay-long-term',
+    title: 'Villa stay for long-term rent',
+    propertyType: 'Villa',
+    price: 24000,
+    dailyPrice: 1800,
     unit: '/month',
-    summary: 'Well-connected residential option with lift and secure entry.',
+    summary: 'Spacious villa option with parking, garden frontage and direct landlord terms.',
     location: 'Madan Mahal, Jabalpur',
     image: towerArt,
     rating: 4
@@ -160,10 +176,65 @@ export const rentalListings: RentalListing[] = [
 ];
 
 export const discoveryTiles = [
-  { title: 'Garden-facing home', image: gardenArt },
-  { title: 'Nearby on map', image: mapArt },
-  { title: 'More room photos', image: roomArt },
-  { title: 'Trip plan?', image: tripArt }
+  { title: 'Garden-facing villa', image: gardenArt },
+  { title: 'Nearby rental map', image: mapArt },
+  { title: 'Room and facility photos', image: roomArt },
+  { title: 'Accessories for your stay', image: tripArt }
+];
+
+export const accessoryItems: AccessoryItem[] = [
+  {
+    name: 'Single-door fridge',
+    rent: 'Rs 900/month',
+    summary: 'Energy-efficient fridge for hostel rooms, flats and apartments.',
+    image: createArt('#d1fae5', '#14b8a6', 'Fridge')
+  },
+  {
+    name: 'Washing machine',
+    rent: 'Rs 1,400/month',
+    summary: 'Compact semi-automatic machine suitable for tenant use.',
+    image: createArt('#e0f2fe', '#0ea5e9', 'Washing')
+  },
+  {
+    name: 'Sofa cum bed',
+    rent: 'Rs 1,800/month',
+    summary: 'Flexible sofa bed setup for studio apartments and guest rooms.',
+    image: createArt('#fef3c7', '#f59e0b', 'Sofa Bed')
+  },
+  {
+    name: 'Study table set',
+    rent: 'Rs 600/month',
+    summary: 'Essential desk and chair combo for students and remote workers.',
+    image: createArt('#ede9fe', '#8b5cf6', 'Study Set')
+  }
+];
+
+export const platformHighlights = [
+  'Direct landlord-to-tenant accommodation discovery with no vehicle listings mixed in.',
+  'Daily, weekly and monthly duration support for flexible stay planning.',
+  'Deeper property pages covering landlord rules, facilities, allowed tenant profiles and feedback.'
+];
+
+export const landlordRules = [
+  'Bachelors allowed after landlord approval',
+  'No loud parties or overnight unregistered guests',
+  'ID verification required before move-in',
+  'Electricity and water terms shared clearly before booking'
+];
+
+export const facilityList = [
+  'Attached washroom',
+  'Wardrobe and storage',
+  'Kitchen or pantry access',
+  'Wi-Fi availability',
+  'Parking or two-wheeler stand',
+  'Cleaning support based on property'
+];
+
+export const feedbackNotes = [
+  'Landlord is responsive and shares rules clearly before check-in.',
+  'Good match for students and working professionals looking for flexible duration stays.',
+  'Facilities matched the listing and the neighborhood felt safe.'
 ];
 
 export const orderItems: OrderItem[] = [
@@ -174,24 +245,24 @@ export const orderItems: OrderItem[] = [
     amount: 'Rs 4,500/month'
   },
   {
-    title: 'City Center Studio',
+    title: 'Civil Lines Family Flat',
     status: 'Completed',
     duration: '10 Feb 2026 - 10 Mar 2026',
-    amount: 'Rs 4,300/month'
+    amount: 'Rs 12,000/month'
   },
   {
-    title: 'Weekend Bike Rental',
+    title: 'Villa stay in Madan Mahal',
     status: 'Upcoming',
-    duration: '28 Mar 2026 - 30 Mar 2026',
-    amount: 'Rs 900/weekend'
+    duration: '28 Mar 2026 - 28 Apr 2026',
+    amount: 'Rs 24,000/month'
   }
 ];
 
 export const helpTopics = [
-  'How to book and confirm a property',
-  'How Unio Coins apply to rentals',
-  'What documents are needed for hostel stays',
-  'How to contact support or request cancellation'
+  'How to book directly from a landlord on Unio',
+  'What documents are needed for daily, weekly and monthly stays',
+  'How to check what the landlord allows before confirming',
+  'How to review facilities, feedback and cancellation terms'
 ];
 
 export const settingGroups = [

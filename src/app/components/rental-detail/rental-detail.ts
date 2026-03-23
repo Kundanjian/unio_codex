@@ -1,7 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { rentalListings } from '../../data/market-data';
+import {
+  facilityList,
+  feedbackNotes,
+  landlordRules,
+  rentalListings
+} from '../../data/market-data';
 
 @Component({
   selector: 'app-rental-detail',
@@ -16,6 +21,9 @@ export class RentalDetailComponent {
     rentalListings.find((item) => item.id === this.route.snapshot.paramMap.get('id')) ??
     rentalListings[0];
   readonly relatedListings = rentalListings.slice(0, 4);
+  readonly landlordRules = landlordRules;
+  readonly facilities = facilityList;
+  readonly feedbackNotes = feedbackNotes;
 
   stars(rating: number): boolean[] {
     return Array.from({ length: 5 }, (_, index) => index < rating);
