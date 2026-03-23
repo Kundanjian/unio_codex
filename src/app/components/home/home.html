@@ -1,10 +1,88 @@
-<h2 class="page-title">Quick Rent Available</h2>
+<section class="home-page">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">UNDER 2 KM FROM YOUR LOCATION</p>
+      <h1>Find the right rental for your day, week or month.</h1>
+      <p class="hero-text">
+        Browse bikes, cars, hostels and everyday essentials in Jabalpur with a fast,
+        familiar marketplace flow.
+      </p>
+    </div>
 
-<div class="card">
-  <h3>Rent items instantly</h3>
-  <p>
-    Choose from available items and rent them quickly without delay.
-  </p>
+    <div class="hero-panel">
+      <div class="selector-grid">
+        <label class="field-card">
+          <span>duration</span>
+          <select>
+            @for (option of durationOptions; track option) {
+              <option>{{ option }}</option>
+            }
+          </select>
+        </label>
 
-  <button class="primary-btn">Explore Now</button>
-</div>
+        <label class="field-card">
+          <span>location</span>
+          <select>
+            <option>India</option>
+            @for (location of locationSuggestions; track location) {
+              <option>{{ location }}</option>
+            }
+          </select>
+        </label>
+      </div>
+
+      <div class="category-row">
+        @for (filter of quickFilters; track filter.label) {
+          <article class="category-card">
+            <span class="category-icon">{{ filter.icon }}</span>
+            <span>{{ filter.label }}</span>
+          </article>
+        }
+      </div>
+
+      <label class="search-bar">
+        <span class="sr-only">Search</span>
+        <input type="text" value="Find Bike, Car, Hostels or More..." />
+        <button type="button" aria-label="Search">Go</button>
+      </label>
+    </div>
+  </section>
+
+  <div class="breadcrumbs">Home/Hostels/Hostels in Jabalpur Madhya Pradesh</div>
+
+  <section class="listing-grid">
+    @for (listing of listings; track listing.title) {
+      <article class="listing-card">
+        <div class="image-wrap">
+          @if (listing.badge) {
+            <span class="badge">{{ listing.badge }}</span>
+          }
+          <img [src]="listing.image" [alt]="listing.title" />
+        </div>
+
+        <div class="listing-content">
+          <div class="price-row">
+            <p class="price">Rs {{ listing.price }}<span>{{ listing.unit }}</span></p>
+            <div class="stars" aria-label="Property rating">
+              @for (filled of stars(listing.rating); track $index) {
+                <span [class.filled]="filled">&#9733;</span>
+              }
+            </div>
+          </div>
+
+          <h2>{{ listing.title }}</h2>
+          <p>{{ listing.summary }}</p>
+        </div>
+      </article>
+    }
+  </section>
+
+  <section class="discovery-grid">
+    @for (tile of discoveryTiles; track tile.title) {
+      <article class="discovery-card">
+        <img [src]="tile.image" [alt]="tile.title" />
+        <div class="discovery-overlay">{{ tile.title }}</div>
+      </article>
+    }
+  </section>
+</section>

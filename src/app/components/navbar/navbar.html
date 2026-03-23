@@ -1,4 +1,17 @@
-<div class="navbar">
-  <span class="material-icons">home</span>
-  <span class="logo">UNIO RENTALS</span>
-</div>
+<header class="navbar">
+  <a class="brand" routerLink="/">
+    <span class="brand-mark">U</span>
+    <span class="brand-text">Unio</span>
+  </a>
+
+  <nav class="nav-links" aria-label="Primary navigation">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">home</a>
+    <a routerLink="/quick-rent" routerLinkActive="active">Rentals</a>
+    <a routerLink="/help" routerLinkActive="active">more</a>
+  </nav>
+
+  <div class="auth-actions">
+    <button type="button" class="ghost-btn">Log in</button>
+    <button type="button" class="primary-btn">Register</button>
+  </div>
+</header>
