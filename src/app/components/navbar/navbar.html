@@ -1,17 +1,57 @@
 <header class="navbar">
-  <a class="brand" routerLink="/">
+  <button type="button" class="menu-btn" aria-label="Open menu" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <a class="brand" routerLink="/" (click)="closeMenu()">
     <span class="brand-mark">U</span>
     <span class="brand-text">Unio</span>
   </a>
 
+  <div class="search-tools">
+    <label class="toolbar-pill">
+      <span>1 Day,</span>
+      <input type="text" value="Jabalpur" />
+    </label>
+
+    <label class="toolbar-search">
+      <input type="text" value="Find Bike, Car, Hostels or More...." />
+    </label>
+  </div>
+
   <nav class="nav-links" aria-label="Primary navigation">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">home</a>
-    <a routerLink="/quick-rent" routerLinkActive="active">Rentals</a>
-    <a routerLink="/help" routerLinkActive="active">more</a>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">home</a>
+    <a routerLink="/quick-rent" routerLinkActive="active" (click)="closeMenu()">Rentals</a>
+    <a routerLink="/help" routerLinkActive="active" (click)="closeMenu()">more</a>
   </nav>
 
   <div class="auth-actions">
-    <button type="button" class="ghost-btn">Log in</button>
-    <button type="button" class="primary-btn">Register</button>
+    <a routerLink="/login" class="ghost-btn" (click)="closeMenu()">Log in</a>
+    <a routerLink="/signup" class="primary-btn" (click)="closeMenu()">Register</a>
   </div>
 </header>
+
+@if (menuOpen) {
+  <button type="button" class="menu-backdrop" aria-label="Close menu" (click)="closeMenu()"></button>
+
+  <aside class="menu-drawer">
+    <div class="drawer-head">
+      <div class="avatar">N</div>
+      <div>
+        <h2>Name</h2>
+        <p>+91 9406925520</p>
+      </div>
+    </div>
+
+    <nav class="drawer-links">
+      <a routerLink="/coins" (click)="closeMenu()">Unio Coins</a>
+      <a routerLink="/orders" (click)="closeMenu()">My Orders</a>
+      <a routerLink="/help" (click)="closeMenu()">Help</a>
+      <a routerLink="/quick-rent" (click)="closeMenu()">install unio mobile app</a>
+      <a routerLink="/settings" (click)="closeMenu()">Setting</a>
+      <a routerLink="/login" (click)="closeMenu()">Log out</a>
+    </nav>
+  </aside>
+}

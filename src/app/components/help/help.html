@@ -1,2 +1,16 @@
-<h2 class="page-title">Help</h2>
-<p>Support and help information will appear here.</p>
+<section class="page-shell">
+  <div class="page-head">
+    <p class="eyebrow">Support center</p>
+    <h1>Help</h1>
+    <p>Quick answers for booking, payments, rentals and account support.</p>
+  </div>
+
+  <section class="help-grid">
+    @for (topic of topics; track topic) {
+      <article class="help-card">
+        <h2>{{ topic }}</h2>
+        <p>Open a support request or chat with the Unio team for assistance.</p>
+      </article>
+    }
+  </section>
+</section>

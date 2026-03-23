@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './unio-coins.html',
   styleUrls: ['./unio-coins.css']
 })
-export class UnioCoinsComponent {}
+export class UnioCoinsComponent {
+  readonly coins = 250;
+}

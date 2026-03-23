@@ -1,2 +1,16 @@
-<h2 class="page-title">Settings</h2>
-<p>Account and application settings will appear here.</p>
+<section class="page-shell">
+  <div class="page-head">
+    <p class="eyebrow">Preferences</p>
+    <h1>Setting</h1>
+    <p>Manage your account, communication and privacy controls.</p>
+  </div>
+
+  <section class="settings-grid">
+    @for (item of settings; track item.label) {
+      <article class="setting-card">
+        <h2>{{ item.label }}</h2>
+        <p>{{ item.value }}</p>
+      </article>
+    }
+  </section>
+</section>

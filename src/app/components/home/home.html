@@ -52,7 +52,7 @@
 
   <section class="listing-grid">
     @for (listing of listings; track listing.title) {
-      <article class="listing-card">
+      <a class="listing-card" [routerLink]="['/rentals', listing.id]">
         <div class="image-wrap">
           @if (listing.badge) {
             <span class="badge">{{ listing.badge }}</span>
@@ -73,7 +73,7 @@
           <h2>{{ listing.title }}</h2>
           <p>{{ listing.summary }}</p>
         </div>
-      </article>
+      </a>
     }
   </section>
 

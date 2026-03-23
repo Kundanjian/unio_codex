@@ -16,8 +16,6 @@
 
 .home-page {
   --accent: #2378bf;
-  --accent-soft: #e7f4ff;
-  --warm: #f89b38;
   max-width: 1320px;
   margin: 0 auto;
   padding: 24px 20px 48px;
@@ -182,6 +180,11 @@
   box-shadow: 0 16px 36px rgba(17, 56, 96, 0.08);
 }
 
+.listing-card {
+  color: inherit;
+  text-decoration: none;
+}
+
 .image-wrap {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -250,7 +253,6 @@
 
 .stars {
   display: inline-flex;
-  gap: 3px;
   color: #d7dce2;
 }
 

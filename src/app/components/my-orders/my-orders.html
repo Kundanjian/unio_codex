@@ -1,15 +1,23 @@
-<h2 class="page-title">My Orders</h2>
-
-<div class="orders-container">
-  <div class="order-card">
-    <h3>Power Drill</h3>
-    <p>Status: <span class="active">Active</span></p>
-    <p>Rented on: 12 Jan 2026</p>
+<section class="page-shell">
+  <div class="page-head">
+    <p class="eyebrow">Rental history</p>
+    <h1>My Orders</h1>
+    <p>Track current stays, upcoming bookings and completed rentals in one place.</p>
   </div>
 
-  <div class="order-card">
-    <h3>Projector</h3>
-    <p>Status: <span class="completed">Completed</span></p>
-    <p>Rented on: 05 Jan 2026</p>
-  </div>
-</div>
+  <section class="orders-grid">
+    @for (order of orders; track order.title) {
+      <article class="order-card">
+        <div class="status-row">
+          <h2>{{ order.title }}</h2>
+          <span class="status" [class.active]="order.status === 'Active'" [class.completed]="order.status === 'Completed'">
+            {{ order.status }}
+          </span>
+        </div>
+
+        <p>{{ order.duration }}</p>
+        <strong>{{ order.amount }}</strong>
+      </article>
+    }
+  </section>
+</section>

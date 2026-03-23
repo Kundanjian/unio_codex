@@ -1,2 +1,55 @@
-<h2>Quick Rent Available</h2>
-<p>All quick rental items will appear here.</p>
+<section class="rentals-page">
+  <div class="filter-strip">
+    <label class="pill">
+      <span>duration</span>
+      <select>
+        @for (option of durationOptions; track option) {
+          <option>{{ option }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="pill">
+      <span>location</span>
+      <input type="text" value="Jabalpur, Madhya Pradesh" />
+    </label>
+  </div>
+
+  <div class="category-row">
+    @for (filter of quickFilters; track filter.label) {
+      <article class="category-card">
+        <span class="category-icon">{{ filter.icon }}</span>
+        <span>{{ filter.label }}</span>
+      </article>
+    }
+  </div>
+
+  <div class="search-bar">
+    <input type="text" value="Find Bike, Car, Hostels or More...." />
+    <button type="button">Go</button>
+  </div>
+
+  <div class="breadcrumbs">Home/Hostels/Hostels in Jabalpur Madhya Pradesh</div>
+
+  <section class="listing-grid">
+    @for (listing of listings; track listing.id + $index) {
+      <a class="listing-card" [routerLink]="['/rentals', listing.id]">
+        <img [src]="listing.image" [alt]="listing.title" />
+
+        <div class="listing-content">
+          <div class="price-row">
+            <p class="price">Rs {{ listing.price }}<span>{{ listing.unit }}</span></p>
+            <div class="stars" aria-label="Property rating">
+              @for (filled of stars(listing.rating); track $index) {
+                <span [class.filled]="filled">&#9733;</span>
+              }
+            </div>
+          </div>
+
+          <h2>{{ listing.title }}</h2>
+          <p>{{ listing.summary }}</p>
+        </div>
+      </a>
+    }
+  </section>
+</section>

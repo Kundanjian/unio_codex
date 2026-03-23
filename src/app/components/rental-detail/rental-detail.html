@@ -1,0 +1,95 @@
+<section class="detail-page">
+  <div class="breadcrumbs">
+    <a routerLink="/">Home</a>
+    <span>/</span>
+    <a routerLink="/quick-rent">Hostels</a>
+    <span>/</span>
+    <span>{{ listing.title }}</span>
+  </div>
+
+  <section class="detail-layout">
+    <article class="gallery-card">
+      <img [src]="listing.image" [alt]="listing.title" />
+
+      <div class="gallery-dots">
+        <span class="filled"></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="gallery-actions">
+        <button type="button">CONTACT</button>
+        <button type="button">RENT</button>
+      </div>
+    </article>
+
+    <article class="summary-card">
+      <h1>{{ listing.title }}</h1>
+      <div class="rating-row">
+        <span class="score">4.38 ★</span>
+        <span class="meta">3150 Ratings &amp; 218 Reviews</span>
+      </div>
+
+      <div class="stars" aria-label="Listing rating">
+        @for (filled of stars(listing.rating); track $index) {
+          <span [class.filled]="filled">&#9733;</span>
+        }
+      </div>
+
+      <p class="day-price">Rs {{ listing.dailyPrice }}/day</p>
+      <p class="month-price">Rs {{ listing.price }}{{ listing.unit }}</p>
+
+      <p class="description">
+        1bhk semi furnished 1st floor house available for rent near Madan Mahal chowk.
+        Jabalpur only service class small family and service class boys.
+      </p>
+
+      <h2>GANGA JAMNA BOYS HOSTEL JABALPUR, M.P.</h2>
+      <ul class="highlights">
+        <li>Walking distance from railway station</li>
+        <li>Main market under 500m</li>
+        <li>Bachelor allows</li>
+        <li>Tiffin/ maid service available</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="details-table">
+    <h3>Details</h3>
+    <div class="spec-grid">
+      <div><span>Type</span><strong>Houses</strong></div>
+      <div><span>Bedrooms</span><strong>1</strong></div>
+      <div><span>Bathrooms</span><strong>1</strong></div>
+      <div><span>Furnishing</span><strong>Semi-furnished</strong></div>
+      <div><span>Listed by</span><strong>Dealer</strong></div>
+      <div><span>Super Builtup area (ft²)</span><strong>750</strong></div>
+      <div><span>Carpet Area (ft²)</span><strong>750</strong></div>
+      <div><span>Bachelors Allowed</span><strong>Yes</strong></div>
+      <div><span>Maintenance (monthly)</span><strong>No</strong></div>
+      <div><span>Bathrooms</span><strong>1</strong></div>
+      <div><span>Facing</span><strong>North</strong></div>
+      <div><span>Project name</span><strong>Independent rental</strong></div>
+    </div>
+  </section>
+
+  <section class="related-section">
+    <div class="section-head">
+      <h3>More rentals nearby</h3>
+      <a routerLink="/quick-rent">View all</a>
+    </div>
+
+    <div class="related-grid">
+      @for (item of relatedListings; track item.id) {
+        <a class="related-card" [routerLink]="['/rentals', item.id]">
+          <img [src]="item.image" [alt]="item.title" />
+          <div>
+            <strong>Rs {{ item.price }}{{ item.unit }}</strong>
+            <p>{{ item.title }}</p>
+          </div>
+        </a>
+      }
+    </div>
+  </section>
+</section>
