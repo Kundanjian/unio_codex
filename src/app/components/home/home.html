@@ -16,7 +16,6 @@
 
       <div class="hero-actions">
         <a class="primary-action" routerLink="/quick-rent">Explore rentals</a>
-        <a class="secondary-action" routerLink="/accessories">Accessories</a>
       </div>
     </div>
 
@@ -45,7 +44,9 @@
       <div class="category-row">
         @for (filter of quickFilters; track filter.label) {
           <article class="category-card">
-            <span class="category-icon">{{ filter.icon }}</span>
+            <span class="category-icon">
+              <img [src]="filter.icon" [alt]="filter.label" />
+            </span>
             <span>{{ filter.label }}</span>
           </article>
         }
@@ -95,25 +96,5 @@
         <div class="discovery-overlay">{{ tile.title }}</div>
       </article>
     }
-  </section>
-
-  <section class="accessories-strip">
-    <div class="section-copy">
-      <p class="section-tag">Add-on rentals</p>
-      <h2>Need essentials after booking?</h2>
-      <p>Rent fridge, washing machine, sofa bed and other accessories as a separate add-on for your stay.</p>
-    </div>
-
-    <div class="accessory-mini-grid">
-      @for (item of accessories; track item.name) {
-        <article class="accessory-mini-card">
-          <img [src]="item.image" [alt]="item.name" />
-          <div>
-            <strong>{{ item.name }}</strong>
-            <p>{{ item.rent }}</p>
-          </div>
-        </article>
-      }
-    </div>
   </section>
 </section>

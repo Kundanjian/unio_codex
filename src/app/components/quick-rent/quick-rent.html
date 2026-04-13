@@ -18,7 +18,9 @@
   <div class="category-row">
     @for (filter of quickFilters; track filter.label) {
       <article class="category-card">
-        <span class="category-icon">{{ filter.icon }}</span>
+        <span class="category-icon">
+          <img [src]="filter.icon" [alt]="filter.label" />
+        </span>
         <span>{{ filter.label }}</span>
       </article>
     }

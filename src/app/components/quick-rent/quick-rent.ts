@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { PropertyApiService } from '../../core/services/property-api.service';
 import {
   durationOptions,
   quickFilters,
@@ -14,10 +15,21 @@ import {
   templateUrl: './quick-rent.html',
   styleUrls: ['./quick-rent.css']
 })
-export class QuickRentComponent {
+export class QuickRentComponent implements OnInit {
+  private readonly propertyApi = inject(PropertyApiService);
   readonly durationOptions = durationOptions;
   readonly quickFilters = quickFilters;
-  readonly listings = [...rentalListings, ...rentalListings.slice(0, 4)];
+  listings = [...rentalListings, ...rentalListings.slice(0, 4)];
+
+  ngOnInit(): void {
+    this.propertyApi.getProperties().subscribe({
+      next: (properties) => {
+        if (properties.length) {
+          this.listings = properties;
+        }
+      }
+    });
+  }
 
   stars(rating: number): boolean[] {
     return Array.from({ length: 5 }, (_, index) => index < rating);

@@ -5,21 +5,31 @@
     <p class="auth-kicker">Welcome back</p>
     <h1>LOGIN</h1>
 
-    <form class="auth-form">
+    <form class="auth-form" (ngSubmit)="login()">
       <label>
-        <span>Continue with phone number/ gmail</span>
-        <input type="text" placeholder="Enter phone number or email" />
+        <span>Username</span>
+        <input type="text" placeholder="Enter username" [(ngModel)]="username" name="username" />
       </label>
 
       <label>
         <span>Password</span>
-        <input type="password" placeholder="Enter password" />
+        <input type="password" placeholder="Enter password" [(ngModel)]="password" name="password" />
       </label>
 
-      <p class="auth-divider">or</p>
+      <p class="auth-divider">Use backend demo login: admin / password</p>
 
-      <button type="button" class="cta">Request OTP</button>
+      <button type="submit" class="cta" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Signing in...' : 'Sign in' }}
+      </button>
     </form>
+
+    @if (successMessage) {
+      <p class="auth-message success">{{ successMessage }}</p>
+    }
+
+    @if (errorMessage) {
+      <p class="auth-message error">{{ errorMessage }}</p>
+    }
 
     <p class="auth-switch">
       New here?
