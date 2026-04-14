@@ -5,35 +5,34 @@
     <p class="auth-kicker">Welcome back</p>
     <h1>LOGIN</h1>
 
-    <form class="auth-form" (ngSubmit)="login()">
+    <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="login()">
       <label>
-        <span>Username</span>
-        <input type="text" placeholder="Enter username" [(ngModel)]="username" name="username" />
+        <span>Email</span>
+        <input type="email" placeholder="Enter email" formControlName="email" />
       </label>
 
       <label>
         <span>Password</span>
-        <input type="password" placeholder="Enter password" [(ngModel)]="password" name="password" />
+        <input type="password" placeholder="Enter password" formControlName="password" />
       </label>
 
-      <p class="auth-divider">Use backend demo login: admin / password</p>
+      @if (errorMessage) {
+        <p class="auth-message error">{{ errorMessage }}</p>
+      }
 
-      <button type="submit" class="cta" [disabled]="isSubmitting">
-        {{ isSubmitting ? 'Signing in...' : 'Sign in' }}
+      <button type="submit" class="cta" [disabled]="loading">
+        {{ loading ? 'Signing in...' : 'Sign in' }}
       </button>
     </form>
-
-    @if (successMessage) {
-      <p class="auth-message success">{{ successMessage }}</p>
-    }
-
-    @if (errorMessage) {
-      <p class="auth-message error">{{ errorMessage }}</p>
-    }
 
     <p class="auth-switch">
       New here?
       <a routerLink="/signup">Create an account</a>
+    </p>
+
+    <p class="auth-admin-link">
+      Admin account?
+      <a routerLink="/admin-login">Use admin login</a>
     </p>
   </article>
 </section>

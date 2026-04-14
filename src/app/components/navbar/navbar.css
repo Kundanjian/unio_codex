@@ -137,12 +137,21 @@
   transform: translateX(18px);
 }
 
-.auth-actions a {
+.auth-actions a,
+.auth-actions button {
   border-radius: 10px;
   padding: 9px 16px;
-  text-decoration: none;
   font-size: 0.84rem;
   font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.auth-actions a {
+  text-decoration: none;
+}
+
+.auth-actions button {
+  cursor: pointer;
 }
 
 .ghost-btn {
@@ -155,6 +164,12 @@
   background: var(--unio-orange);
   color: var(--text-contrast);
   border: 1px solid var(--unio-orange-dark);
+}
+
+.danger-btn {
+  background: #fde4e4;
+  color: #8a1d1d;
+  border-color: #f6c3c3;
 }
 
 .booking-shell {
@@ -312,6 +327,18 @@
   text-decoration: none;
   font-size: 1rem;
   font-weight: 700;
+}
+
+.drawer-logout {
+  text-align: left;
+  padding: 12px 2px;
+  border: 0;
+  border-bottom: 1px solid var(--border-soft);
+  background: transparent;
+  color: #8a1d1d;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 @media (max-width: 1180px) {

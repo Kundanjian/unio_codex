@@ -47,8 +47,13 @@
       </button>
 
       <div class="auth-actions">
-        <a routerLink="/login" class="ghost-btn" (click)="closeMenu()">Log in</a>
-        <a routerLink="/signup" class="primary-btn" (click)="closeMenu()">Register</a>
+        @if (isLoggedIn()) {
+          <a routerLink="/dashboard" class="ghost-btn" (click)="closeMenu()">Dashboard</a>
+          <button type="button" class="danger-btn" (click)="logout()">Logout</button>
+        } @else {
+          <a routerLink="/login" class="ghost-btn" (click)="closeMenu()">Log in</a>
+          <a routerLink="/signup" class="primary-btn" (click)="closeMenu()">Register</a>
+        }
       </div>
     </div>
   </div>
@@ -115,19 +120,26 @@
 
   <aside class="menu-drawer">
     <div class="drawer-head">
-      <div class="avatar">N</div>
+      <div class="avatar">{{ userInitial() }}</div>
       <div>
-        <h2>Name</h2>
-        <p>Flexible rental seeker</p>
+        <h2>{{ currentUser()?.name || 'Guest' }}</h2>
+        <p>{{ currentUser()?.role || 'Flexible rental seeker' }}</p>
       </div>
     </div>
 
     <nav class="drawer-links">
       <a routerLink="/" (click)="closeMenu()">Home</a>
+      @if (isLoggedIn()) {
+        <a routerLink="/dashboard" (click)="closeMenu()">Dashboard</a>
+      }
       <a routerLink="/quick-rent" (click)="closeMenu()">Accommodation</a>
       <a routerLink="/orders" (click)="closeMenu()">My Orders</a>
       <a routerLink="/settings" (click)="closeMenu()">Settings</a>
-      <a routerLink="/login" (click)="closeMenu()">Log out</a>
+      @if (isLoggedIn()) {
+        <button type="button" class="drawer-logout" (click)="logout()">Log out</button>
+      } @else {
+        <a routerLink="/login" (click)="closeMenu()">Log in</a>
+      }
     </nav>
   </aside>
 }

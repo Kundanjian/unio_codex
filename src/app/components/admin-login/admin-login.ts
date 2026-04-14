@@ -6,15 +6,15 @@ import { finalize, timeout } from 'rxjs';
 import { AuthApiService } from '../../core/services/auth-api.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-admin-login',
   standalone: true,
   imports: [ReactiveFormsModule, RouterModule],
-  templateUrl: './login.html',
-  styleUrls: ['./login.css']
+  templateUrl: './admin-login.html',
+  styleUrls: ['./admin-login.css']
 })
-export class LoginComponent {
+export class AdminLoginComponent {
   private readonly formBuilder = inject(FormBuilder);
-  private readonly authApi = inject(AuthApiService);
+  private readonly authService = inject(AuthApiService);
   private readonly router = inject(Router);
 
   loading = false;
@@ -25,7 +25,7 @@ export class LoginComponent {
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
-  login(): void {
+  submit(): void {
     if (this.loginForm.invalid || this.loading) {
       this.loginForm.markAllAsTouched();
       return;
@@ -34,8 +34,8 @@ export class LoginComponent {
     this.loading = true;
     this.errorMessage = '';
 
-    this.authApi
-      .loginUser(this.loginForm.getRawValue())
+    this.authService
+      .loginAdmin(this.loginForm.getRawValue())
       .pipe(
         timeout(15000),
         finalize(() => {

@@ -3,38 +3,54 @@
 
   <article class="auth-card">
     <p class="auth-kicker">Join the community</p>
-    <h1>Register/Signup</h1>
+    <h1>Register</h1>
 
-    <form class="auth-form">
-      <div class="split">
-        <label>
-          <span>First name</span>
-          <input type="text" placeholder="First name" />
-        </label>
-
-        <label>
-          <span>Last name</span>
-          <input type="text" placeholder="Last name" />
-        </label>
-      </div>
+    <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="requestOtp()">
+      <label>
+        <span>Name</span>
+        <input type="text" placeholder="Enter full name" formControlName="name" />
+      </label>
 
       <label>
-        <span>Continue with phone number/ gmail</span>
-        <input type="text" placeholder="Enter phone number or email" />
+        <span>Email</span>
+        <input type="email" placeholder="Enter email" formControlName="email" />
       </label>
 
       <label>
         <span>Password</span>
-        <input type="password" placeholder="Create password" />
+        <input type="password" placeholder="Create password" formControlName="password" />
       </label>
 
       <label>
         <span>Confirm Password</span>
-        <input type="password" placeholder="Confirm password" />
+        <input type="password" placeholder="Confirm password" formControlName="confirmPassword" />
       </label>
 
-      <button type="button" class="cta">Request OTP</button>
+      @if (errorMessage) {
+        <p class="auth-message error">{{ errorMessage }}</p>
+      }
+
+      @if (successMessage) {
+        <p class="auth-message success">{{ successMessage }}</p>
+      }
+
+      <button type="submit" class="cta" [disabled]="loading">
+        {{ loading ? 'Sending OTP...' : otpSent ? 'Resend OTP' : 'Send OTP' }}
+      </button>
     </form>
+
+    @if (otpSent) {
+      <form class="otp-form" [formGroup]="otpForm" (ngSubmit)="verifyOtp()">
+        <label>
+          <span>OTP</span>
+          <input type="text" maxlength="6" placeholder="Enter 6-digit OTP" formControlName="otp" />
+        </label>
+
+        <button type="submit" class="cta verify-btn" [disabled]="loading">
+          {{ loading ? 'Verifying...' : 'Verify OTP & Create Account' }}
+        </button>
+      </form>
+    }
 
     <p class="auth-switch">
       Already have an account?

@@ -1,24 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { rentalListings, type RentalListing } from '../../data/market-data';
 import { ApiProperty } from '../models/api.models';
 
 @Injectable({ providedIn: 'root' })
 export class PropertyApiService {
   private readonly http = inject(HttpClient);
-  private readonly apiBase = 'http://localhost:8080/api/properties';
+  private readonly apiBase = '/api/properties';
 
   getProperties(): Observable<RentalListing[]> {
     return this.http
       .get<ApiProperty[]>(this.apiBase)
-      .pipe(map((properties) => properties.map((property, index) => this.mapProperty(property, index))));
+      .pipe(
+        map((properties) => properties.map((property, index) => this.mapProperty(property, index))),
+        catchError(() => of(rentalListings))
+      );
   }
 
   getPropertyById(id: string): Observable<RentalListing> {
     return this.http
       .get<ApiProperty>(`${this.apiBase}/${id}`)
-      .pipe(map((property) => this.mapProperty(property, this.safeIndex(property.id))));
+      .pipe(
+        map((property) => this.mapProperty(property, this.safeIndex(property.id))),
+        catchError(() => {
+          const fallback =
+            rentalListings.find((listing) => String(listing.id) === String(id)) ?? rentalListings[0];
+          return of(fallback);
+        })
+      );
   }
 
   private mapProperty(property: ApiProperty, fallbackIndex: number): RentalListing {

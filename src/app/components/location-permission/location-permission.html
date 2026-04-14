@@ -1,0 +1,15 @@
+@if (showPrompt) {
+  <div class="location-overlay">
+    <article class="location-card">
+      <h2>Allow location access</h2>
+      <p>
+        We use your location to show nearby rental options and improve local recommendations.
+      </p>
+
+      <div class="actions">
+        <button type="button" class="secondary" (click)="dismissPrompt()">Not now</button>
+        <button type="button" class="primary" (click)="allowLocation()">Allow location</button>
+      </div>
+    </article>
+  </div>
+}
