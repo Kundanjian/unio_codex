@@ -14,10 +14,7 @@
 .auth-backdrop {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 30% 55%, rgba(245, 176, 120, 0.5), transparent 22%),
-    radial-gradient(circle at 38% 70%, rgba(132, 168, 187, 0.45), transparent 24%),
-    linear-gradient(180deg, #f7f9fb, #eef6ff);
+  background: var(--auth-backdrop);
 }
 
 .auth-card {
@@ -26,16 +23,16 @@
   width: min(100%, 720px);
   padding: 38px 42px;
   border-radius: 28px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(42, 125, 193, 0.25);
-  box-shadow: 0 28px 60px rgba(22, 54, 92, 0.12);
+  background: color-mix(in srgb, var(--surface-raised) 92%, transparent);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
 }
 
 .auth-kicker,
 .auth-switch {
   margin: 0;
   text-align: center;
-  color: #6a8198;
+  color: var(--text-soft);
 }
 
 .auth-card h1 {
@@ -51,29 +48,24 @@
   gap: 16px;
 }
 
-.split {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
 .auth-form label {
   display: grid;
   gap: 8px;
 }
 
 .auth-form span {
-  color: #53708c;
+  color: var(--text-soft);
   font-size: 0.92rem;
   font-weight: 700;
 }
 
 .auth-form input {
   width: 100%;
-  border: 2px solid #5aa6df;
+  border: 2px solid var(--unio-border);
   border-radius: 16px;
   padding: 16px 18px;
-  background: #ffffff;
+  background: var(--input-bg);
+  color: var(--text-strong);
 }
 
 .cta {
@@ -82,9 +74,61 @@
   border-radius: 18px;
   padding: 16px 20px;
   background: #b7edf7;
-  color: #1b66aa;
+  color: var(--text-contrast);
   font-weight: 800;
   cursor: pointer;
+}
+
+.cta:disabled {
+  opacity: 0.72;
+  cursor: progress;
+}
+
+.auth-message {
+  margin: 0;
+  text-align: center;
+  font-weight: 700;
+}
+
+.auth-message.success {
+  color: #0f8b4c;
+}
+
+.auth-message.error {
+  color: #b42318;
+}
+
+.otp-form {
+  margin-top: 16px;
+  display: grid;
+  gap: 14px;
+  border-top: 1px dashed var(--border-soft);
+  padding-top: 16px;
+}
+
+.otp-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.otp-form span {
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.otp-form input {
+  width: 100%;
+  border: 2px solid var(--unio-border);
+  border-radius: 16px;
+  padding: 16px 18px;
+  background: var(--input-bg);
+  color: var(--text-strong);
+  letter-spacing: 0.2em;
+}
+
+.verify-btn {
+  margin-top: 0;
 }
 
 .auth-switch {
@@ -98,7 +142,7 @@
 }
 
 @media (max-width: 700px) {
-  .split {
-    grid-template-columns: 1fr;
+  .auth-card {
+    padding: 30px 22px;
   }
 }

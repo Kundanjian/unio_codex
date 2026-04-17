@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { PropertyApiService } from '../../core/services/property-api.service';
 import {
-  accessoryItems,
   discoveryTiles,
   durationOptions,
   locationSuggestions,
@@ -18,14 +18,24 @@ import {
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  private readonly propertyApi = inject(PropertyApiService);
   readonly durationOptions = durationOptions;
   readonly locationSuggestions = locationSuggestions;
   readonly quickFilters = quickFilters;
-  readonly listings = rentalListings;
+  listings = rentalListings;
   readonly discoveryTiles = discoveryTiles;
-  readonly accessories = accessoryItems;
   readonly platformHighlights = platformHighlights;
+
+  ngOnInit(): void {
+    this.propertyApi.getProperties().subscribe({
+      next: (properties) => {
+        if (properties.length) {
+          this.listings = properties.slice(0, 8);
+        }
+      }
+    });
+  }
 
   stars(rating: number): boolean[] {
     return Array.from({ length: 5 }, (_, index) => index < rating);

@@ -1,0 +1,44 @@
+<section class="dashboard-shell">
+  <article class="dashboard-card">
+    <p class="eyebrow">Account dashboard</p>
+    <h1>Welcome, {{ currentUser()?.name }}</h1>
+
+    <div class="meta-grid">
+      <div>
+        <span>Email</span>
+        <strong>{{ currentUser()?.email }}</strong>
+      </div>
+      <div>
+        <span>Role</span>
+        <strong>{{ currentUser()?.role }}</strong>
+      </div>
+      @if (dashboardMessage) {
+        <div>
+          <span>Status</span>
+          <strong>{{ dashboardMessage }}</strong>
+        </div>
+      }
+      @if (currentUser()?.role === 'ADMIN') {
+        <div>
+          <span>Admin Stats</span>
+          <strong>Users: {{ totalUsers ?? '-' }} | Admins: {{ totalAdmins ?? '-' }}</strong>
+        </div>
+      }
+    </div>
+
+    @if (errorMessage) {
+      <p class="error-msg">{{ errorMessage }}</p>
+    }
+
+    @if (isFetchingDashboard) {
+      <p class="loading-msg">Dashboard data load ho raha hai...</p>
+    }
+
+    <div class="actions">
+      <a routerLink="/quick-rent" class="link-btn">Browse rentals</a>
+      <button type="button" class="logout-btn" (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </article>
+</section>

@@ -57,11 +57,122 @@ const createArt = (topColor: string, bottomColor: string, label: string): string
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 };
 
+const createCategoryArt = (
+  label: string,
+  backgroundTop: string,
+  backgroundBottom: string,
+  accent: string,
+  svgBody: string
+): string => {
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+      <defs>
+        <linearGradient id="panel" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="${backgroundTop}" />
+          <stop offset="100%" stop-color="${backgroundBottom}" />
+        </linearGradient>
+      </defs>
+      <rect width="96" height="96" rx="26" fill="url(#panel)" />
+      <circle cx="72" cy="24" r="9" fill="#ffffff" fill-opacity="0.35" />
+      <g stroke="${accent}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+        ${svgBody}
+      </g>
+      <text x="48" y="82" text-anchor="middle" fill="${accent}" font-size="8.8" font-family="Segoe UI, Arial, sans-serif" font-weight="800">
+        ${label}
+      </text>
+    </svg>
+  `;
+
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+};
+
 export const quickFilters: Category[] = [
-  { icon: 'HS', label: 'Hostels' },
-  { icon: 'FL', label: 'Flats' },
-  { icon: 'AP', label: 'Apartments' },
-  { icon: 'VL', label: 'Villas' }
+  {
+    icon: createCategoryArt(
+      'Hostel',
+      '#eef8ff',
+      '#d7ecfb',
+      '#0a6ea9',
+      `
+        <path d="M22 58V36h52v22" />
+        <path d="M28 36v-8h40v8" />
+        <path d="M34 58V46h12v12" />
+        <path d="M50 58V46h12v12" />
+        <path d="M24 62h48" />
+      `
+    ),
+    label: 'Hostels'
+  },
+  {
+    icon: createCategoryArt(
+      'Flat',
+      '#fff5e8',
+      '#ffe4c4',
+      '#d86a1b',
+      `
+        <path d="M28 62V30h40v32" />
+        <path d="M38 40h6" />
+        <path d="M52 40h6" />
+        <path d="M38 50h6" />
+        <path d="M52 50h6" />
+        <path d="M44 62V54h8v8" />
+        <path d="M24 62h48" />
+      `
+    ),
+    label: 'Flats'
+  },
+  {
+    icon: createCategoryArt(
+      'Apt',
+      '#eef7ff',
+      '#dbeeff',
+      '#0a7db8',
+      `
+        <path d="M30 62V26h14v36" />
+        <path d="M44 62V34h20v28" />
+        <path d="M35 34h4" />
+        <path d="M35 42h4" />
+        <path d="M35 50h4" />
+        <path d="M51 42h5" />
+        <path d="M51 50h5" />
+        <path d="M24 62h48" />
+      `
+    ),
+    label: 'Apartments'
+  },
+  {
+    icon: createCategoryArt(
+      'Studio',
+      '#f2f8ff',
+      '#e0efff',
+      '#1d73a8',
+      `
+        <rect x="26" y="31" width="44" height="31" rx="6" />
+        <path d="M34 40h28" />
+        <path d="M34 48h17" />
+        <path d="M58 48h4" />
+        <path d="M32 26h32" />
+      `
+    ),
+    label: 'Studio Apartments'
+  },
+  {
+    icon: createCategoryArt(
+      'Villa',
+      '#fff3ea',
+      '#ffe0cb',
+      '#d96d27',
+      `
+        <path d="M24 44 48 25l24 19" />
+        <path d="M30 42v20h36V42" />
+        <path d="M44 62V49h8v13" />
+        <path d="M36 46h6" />
+        <path d="M54 46h6" />
+        <path d="M24 62h48" />
+      `
+    ),
+    label: 'Villas'
+  }
 ];
 
 const roomArt = createArt('#dbeafe', '#93c5fd', 'Room View');
