@@ -186,10 +186,32 @@
   text-align: center;
 }
 
+.booking-scroll {
+  width: min(1160px, 100%);
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 4px;
+}
+
+.booking-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.booking-scroll::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--surface-soft) 70%, transparent);
+  border-radius: 999px;
+}
+
+.booking-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--unio-blue) 55%, var(--surface-soft));
+  border-radius: 999px;
+}
+
 .booking-bar {
   display: grid;
   grid-template-columns: minmax(220px, 1.25fr) repeat(4, minmax(140px, 1fr));
-  width: min(1160px, 100%);
+  width: max-content;
+  min-width: 1160px;
   overflow: hidden;
   border-radius: 18px;
   background: var(--surface-raised);
@@ -321,12 +343,37 @@
 }
 
 .drawer-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 12px 2px;
   border-bottom: 1px solid var(--border-soft);
   color: var(--unio-blue-dark);
   text-decoration: none;
   font-size: 1rem;
   font-weight: 700;
+}
+
+.drawer-install {
+  text-align: left;
+  padding: 12px 2px;
+  border: 0;
+  border-bottom: 1px solid var(--border-soft);
+  background: transparent;
+  color: var(--unio-blue-dark);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.coin-pill {
+  margin-left: 8px;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: #0f4f82;
+  background: color-mix(in srgb, #8fd6ff 45%, var(--surface-soft));
 }
 
 .drawer-logout {
@@ -350,10 +397,6 @@
   .nav-right {
     justify-content: space-between;
   }
-
-  .booking-bar {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 760px) {
@@ -375,19 +418,6 @@
   .theme-toggle {
     width: 100%;
     justify-content: center;
-  }
-
-  .booking-bar {
-    grid-template-columns: 1fr;
-  }
-
-  .booking-field {
-    border-right: 0;
-    border-bottom: 1px solid var(--border-soft);
-  }
-
-  .booking-field:last-child {
-    border-bottom: 0;
   }
 
   .booking-cta {

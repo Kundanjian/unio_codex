@@ -4,6 +4,7 @@ import { env } from './config/env';
 import { prisma } from './config/prisma';
 import { adminRouter } from './routes/admin.routes';
 import { authRouter } from './routes/auth.routes';
+import { metaRouter } from './routes/meta.routes';
 import { propertyRouter } from './routes/property.routes';
 import { userRouter } from './routes/user.routes';
 import { globalLimiter } from './middleware/rate-limit.middleware';
@@ -18,6 +19,12 @@ app.use(
 );
 app.use(express.json());
 app.use(globalLimiter);
+app.use((_req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
 
 app.get('/health', (_req, res) => {
   res.status(200).json({ status: 'ok' });
@@ -27,6 +34,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/properties', propertyRouter);
+app.use('/api/meta', metaRouter);
 
 app.use((error: unknown, _req: Request, res: Response, _next: NextFunction) => {
   console.error(error);

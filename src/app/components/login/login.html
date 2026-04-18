@@ -7,13 +7,27 @@
 
     <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="login()">
       <label>
-        <span>Email</span>
-        <input type="email" placeholder="Enter email" formControlName="email" />
+        <span>Email or Mobile</span>
+        <input type="text" placeholder="Enter email or mobile" formControlName="identifier" />
       </label>
 
       <label>
         <span>Password</span>
-        <input type="password" placeholder="Enter password" formControlName="password" />
+        <div class="password-field">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Enter password"
+            formControlName="password"
+          />
+          <button
+            type="button"
+            class="password-toggle"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+            (click)="togglePasswordVisibility()"
+          >
+            <span class="material-icons">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
+          </button>
+        </div>
       </label>
 
       @if (errorMessage) {
