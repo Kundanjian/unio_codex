@@ -11,20 +11,29 @@ import { RentalDetailComponent } from './components/rental-detail/rental-detail'
 import { AccessoriesComponent } from './components/accessories/accessories';
 import { DashboardComponent } from './components/dashboard/dashboard';
 import { AdminLoginComponent } from './components/admin-login/admin-login';
+import { ListPropertyComponent } from './components/list-property/list-property';
+import { MyPropertiesComponent } from './components/my-properties/my-properties';
+import { EditPropertyComponent } from './components/edit-property/edit-property';
+import { ViewPropertyComponent } from './components/view-property/view-property';
 import { authGuard } from './guards/auth.guard';
+import { guestGuard } from './guards/guest.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'admin-login', component: AdminLoginComponent },
-  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent, canActivate: [guestGuard] },
+  { path: 'admin-login', component: AdminLoginComponent, canActivate: [guestGuard] },
+  { path: 'signup', component: SignupComponent, canActivate: [guestGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'quick-rent', component: QuickRentComponent },
   { path: 'accessories', component: AccessoriesComponent },
   { path: 'rentals/:id', component: RentalDetailComponent },
-  { path: 'orders', component: MyOrdersComponent },
-  { path: 'coins', component: UnioCoinsComponent },
-  { path: 'settings', component: SettingsComponent },
+  { path: 'orders', component: MyOrdersComponent, canActivate: [authGuard] },
+  { path: 'coins', component: UnioCoinsComponent, canActivate: [authGuard] },
+  { path: 'settings', component: SettingsComponent, canActivate: [authGuard] },
   { path: 'help', component: HelpComponent },
+  { path: 'list-property', component: ListPropertyComponent, canActivate: [authGuard] },
+  { path: 'my-properties', component: MyPropertiesComponent, canActivate: [authGuard] },
+  { path: 'edit-property/:id', component: EditPropertyComponent, canActivate: [authGuard] },
+  { path: 'property/:id', component: ViewPropertyComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];

@@ -13,19 +13,23 @@ enum UserRole {
 }
 
 model User {
-  id              String    @id @default(cuid())
+  id              String            @id @default(cuid())
   name            String
-  email           String    @unique
+  email           String            @unique
+  phone           String?           @unique
   passwordHash    String
-  role            UserRole  @default(USER)
+  unioCoins       Int               @default(250)
+  role            UserRole          @default(USER)
   emailVerifiedAt DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  propertyListings PropertyListing[]
 }
 
 model RegistrationOtp {
   id           String   @id @default(cuid())
   email        String
+  phone        String?
   name         String
   passwordHash String
   otpCode      String
@@ -34,4 +38,86 @@ model RegistrationOtp {
   createdAt    DateTime @default(now())
 
   @@index([email])
+}
+
+enum RentalCategory {
+  HOSTELS_PG
+  VEHICLES
+}
+
+enum HostelType {
+  SINGLE_BED_ROOM
+  DOUBLE_BED_ROOM
+  HOSTEL
+  FLAT
+  HOUSE
+  APARTMENT
+  OTHER
+}
+
+enum LunchDinnerOption {
+  INCLUDED
+  NOT_AVAILABLE
+  PAY_EXTRA
+}
+
+enum RentDuration {
+  ONE_DAY
+  ONE_WEEK
+  ONE_MONTH
+  THREE_MONTHS
+  SIX_MONTHS
+  ONE_YEAR
+}
+
+model PropertyListing {
+  id                       String            @id @default(cuid())
+  userId                   String
+  user                     User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Basic Information
+  proprietorName           String
+  mobileNumber             String
+  alternativeMobileNumber  String?
+  email                    String
+  permanentAddress         String
+  rentalAddress            String
+  
+  // Rental Preferences
+  quickRent                Boolean           @default(false)
+  rentDurations            RentDuration[]
+  rentalCategory           RentalCategory
+  
+  // Hostel/PG Specific Fields
+  hostelType               HostelType?
+  surfaceArea              Int?
+  parkingBikeScooter       Boolean           @default(false)
+  parkingCar               Boolean           @default(false)
+  furnitureBed             Boolean           @default(false)
+  furnitureTable           Boolean           @default(false)
+  furnitureChair           Boolean           @default(false)
+  furnitureBardrove        Boolean           @default(false)
+  furnitureAlmirah         Boolean           @default(false)
+  furnitureKitchenWare     Boolean           @default(false)
+  nearbyPlaces             String?
+  bachelorAllowed          Boolean?
+  cctvAvailable            Boolean?
+  lunchDinnerOption        LunchDinnerOption?
+  lateNightEntryAllowed    Boolean?
+  
+  // Product Description
+  title                    String
+  description              String
+  images                   String[]
+  
+  status                   String            @default("ACTIVE")
+  createdAt                DateTime          @default(now())
+  updatedAt                DateTime          @updatedAt
+
+  @@index([userId])
+  @@index([rentalCategory])
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+  @@index([quickRent])
+  @@index([userId, status])
 }

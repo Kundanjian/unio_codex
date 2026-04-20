@@ -1,0 +1,337 @@
+<div class="list-property-container">
+  <div class="list-property-header">
+    <h1>Edit Property</h1>
+    <p>Update your rental property details</p>
+  </div>
+
+  <!-- Loading Property State -->
+  <div *ngIf="loadingProperty" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading property details...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage && loadingProperty" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <form *ngIf="!loadingProperty" [formGroup]="propertyForm" (ngSubmit)="submitProperty()" class="property-form">
+    <!-- Error/Success Messages -->
+    <div *ngIf="errorMessage" class="alert alert-error">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <!-- Section 1: Basic Information -->
+    <div class="form-section">
+      <h2>Basic Information</h2>
+      
+      <div class="form-group">
+        <label for="proprietorName">Proprietor Name *</label>
+        <input
+          id="proprietorName"
+          type="text"
+          formControlName="proprietorName"
+          placeholder="Enter proprietor name"
+          [class.error]="propertyForm.get('proprietorName')?.touched && propertyForm.get('proprietorName')?.invalid"
+        />
+        <span *ngIf="propertyForm.get('proprietorName')?.touched && propertyForm.get('proprietorName')?.invalid" class="error-text">
+          Proprietor name is required (min 2 characters)
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="mobileNumber">Mobile Number *</label>
+        <input
+          id="mobileNumber"
+          type="tel"
+          formControlName="mobileNumber"
+          placeholder="Enter mobile number"
+          [class.error]="propertyForm.get('mobileNumber')?.touched && propertyForm.get('mobileNumber')?.invalid"
+        />
+        <span *ngIf="propertyForm.get('mobileNumber')?.touched && propertyForm.get('mobileNumber')?.invalid" class="error-text">
+          Mobile number is required (10-20 digits)
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="alternativeMobileNumber">Alternative Mobile Number</label>
+        <input
+          id="alternativeMobileNumber"
+          type="tel"
+          formControlName="alternativeMobileNumber"
+          placeholder="Enter alternative mobile number"
+          [class.error]="propertyForm.get('alternativeMobileNumber')?.touched && propertyForm.get('alternativeMobileNumber')?.invalid"
+        />
+        <span *ngIf="propertyForm.get('alternativeMobileNumber')?.touched && propertyForm.get('alternativeMobileNumber')?.invalid" class="error-text">
+          Please enter a valid mobile number (10-20 digits)
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter email address"
+          [class.error]="propertyForm.get('email')?.touched && propertyForm.get('email')?.invalid"
+        />
+        <span *ngIf="propertyForm.get('email')?.touched && propertyForm.get('email')?.invalid" class="error-text">
+          Valid email is required
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="permanentAddress">Permanent Address *</label>
+        <textarea
+          id="permanentAddress"
+          formControlName="permanentAddress"
+          placeholder="Enter permanent address"
+          rows="3"
+          [class.error]="propertyForm.get('permanentAddress')?.touched && propertyForm.get('permanentAddress')?.invalid"
+        ></textarea>
+        <span *ngIf="propertyForm.get('permanentAddress')?.touched && propertyForm.get('permanentAddress')?.invalid" class="error-text">
+          Permanent address is required (min 5 characters)
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="rentalAddress">Rental Address *</label>
+        <textarea
+          id="rentalAddress"
+          formControlName="rentalAddress"
+          placeholder="Enter rental address"
+          rows="3"
+          [class.error]="propertyForm.get('rentalAddress')?.touched && propertyForm.get('rentalAddress')?.invalid"
+        ></textarea>
+        <span *ngIf="propertyForm.get('rentalAddress')?.touched && propertyForm.get('rentalAddress')?.invalid" class="error-text">
+          Rental address is required (min 5 characters)
+        </span>
+      </div>
+    </div>
+
+    <!-- Section 2: Rental Preferences -->
+    <div class="form-section">
+      <h2>Rental Preferences</h2>
+
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="quickRent" />
+          <span>Quick Rent Available</span>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>Rent Durations *</label>
+        <div class="checkbox-grid">
+          <label *ngFor="let option of rentDurationOptions" class="checkbox-label">
+            <input
+              type="checkbox"
+              [value]="option.value"
+              [checked]="propertyForm.get('rentDurations')?.value?.includes(option.value)"
+              (change)="onRentDurationChange($event, option.value)"
+            />
+            <span>{{ option.label }}</span>
+          </label>
+        </div>
+        <span *ngIf="propertyForm.get('rentDurations')?.touched && propertyForm.get('rentDurations')?.invalid" class="error-text">
+          Please select at least one rent duration
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="rentalCategory">Rental Category *</label>
+        <select
+          id="rentalCategory"
+          formControlName="rentalCategory"
+          [class.error]="propertyForm.get('rentalCategory')?.touched && propertyForm.get('rentalCategory')?.invalid"
+        >
+          <option [ngValue]="RentalCategory.HOSTELS_PG">HOSTELS / PG</option>
+          <option [ngValue]="RentalCategory.VEHICLES">VEHICLES</option>
+        </select>
+        <span *ngIf="propertyForm.get('rentalCategory')?.touched && propertyForm.get('rentalCategory')?.invalid" class="error-text">
+          Rental category is required
+        </span>
+      </div>
+    </div>
+
+    <!-- Section 3: Hostel Specific Details -->
+    <div class="form-section" *ngIf="isHostelsPG">
+      <h2>Hostel/PG Details</h2>
+
+      <div class="form-group">
+        <label for="hostelType">Hostel Type</label>
+        <select id="hostelType" formControlName="hostelType">
+          <option value="">Select hostel type</option>
+          <option *ngFor="let option of hostelTypeOptions" [ngValue]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="surfaceArea">Surface Area (sq ft)</label>
+        <input
+          id="surfaceArea"
+          type="number"
+          formControlName="surfaceArea"
+          placeholder="Enter surface area"
+          [class.error]="propertyForm.get('surfaceArea')?.touched && propertyForm.get('surfaceArea')?.invalid"
+        />
+        <span *ngIf="propertyForm.get('surfaceArea')?.touched && propertyForm.get('surfaceArea')?.invalid" class="error-text">
+          Please enter a valid number
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>Parking Options</label>
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="parkingBikeScooter" />
+            <span>Bike/Scooter Parking</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="parkingCar" />
+            <span>Car Parking</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Furniture Available</label>
+        <div class="checkbox-grid">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="furnitureBed" />
+            <span>Bed</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="furnitureTable" />
+            <span>Table</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="furnitureChair" />
+            <span>Chair</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="furnitureBardrove" />
+            <span>Bardrove</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="furnitureAlmirah" />
+            <span>Almirah</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="furnitureKitchenWare" />
+            <span>Kitchen Ware</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="nearbyPlaces">Nearby Places</label>
+        <textarea
+          id="nearbyPlaces"
+          formControlName="nearbyPlaces"
+          placeholder="Enter nearby places (e.g., market, hospital, school)"
+          rows="2"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="bachelorAllowed">Bachelor Allowed</label>
+        <select id="bachelorAllowed" formControlName="bachelorAllowed">
+          <option value="">Select option</option>
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="cctvAvailable">CCTV Available</label>
+        <select id="cctvAvailable" formControlName="cctvAvailable">
+          <option value="">Select option</option>
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="lunchDinnerOption">Lunch/Dinner Option</label>
+        <select id="lunchDinnerOption" formControlName="lunchDinnerOption">
+          <option value="">Select option</option>
+          <option *ngFor="let option of lunchDinnerOptions" [ngValue]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="lateNightEntryAllowed">Late Night Entry Allowed</label>
+        <select id="lateNightEntryAllowed" formControlName="lateNightEntryAllowed">
+          <option value="">Select option</option>
+          <option [ngValue]="true">Yes</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Section 4: Product Description -->
+    <div class="form-section">
+      <h2>Product Description</h2>
+
+      <div class="form-group">
+        <label for="title">Title *</label>
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          placeholder="Enter a catchy title for your property"
+          [class.error]="propertyForm.get('title')?.touched && propertyForm.get('title')?.invalid"
+        />
+        <span *ngIf="propertyForm.get('title')?.touched && propertyForm.get('title')?.invalid" class="error-text">
+          Title is required (min 3 characters)
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description *</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          placeholder="Describe your property in detail"
+          rows="5"
+          [class.error]="propertyForm.get('description')?.touched && propertyForm.get('description')?.invalid"
+        ></textarea>
+        <span *ngIf="propertyForm.get('description')?.touched && propertyForm.get('description')?.invalid" class="error-text">
+          Description is required (10-500 characters)
+        </span>
+        <small class="char-count">{{ propertyForm.get('description')?.value?.length || 0 }} / 500</small>
+      </div>
+
+      <div class="form-group">
+        <label>Upload Images of the Product</label>
+        <small class="help-text">Upload up to 3 images. Max 5 MB per file.</small>
+        <input type="file" multiple accept="image/*" (change)="onFileChange($event)" />
+        <div *ngIf="imagePreviewUrls.length > 0" class="image-previews">
+          <div *ngFor="let url of imagePreviewUrls; let i = index" class="image-preview">
+            <img [src]="url" alt="Preview" />
+            <button type="button" class="remove-image" (click)="removeImage(i)">×</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="loading" class="btn-primary">
+        {{ loading ? 'Updating...' : 'Update Property' }}
+      </button>
+      <button type="button" (click)="cancel()" class="btn-secondary" [disabled]="loading">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
