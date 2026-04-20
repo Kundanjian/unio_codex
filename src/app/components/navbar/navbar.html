@@ -135,6 +135,10 @@
         <span class="coin-pill">{{ userCoins() }}</span>
       </a>
       <a routerLink="/orders" (click)="closeMenu()">My Orders</a>
+      @if (isLoggedIn()) {
+        <a routerLink="/list-property" (click)="closeMenu()">List Property</a>
+        <a routerLink="/my-properties" (click)="closeMenu()">My Properties</a>
+      }
       <button type="button" class="drawer-install" (click)="installMobileApp()">
         @if (installingApp) {
           Installing...

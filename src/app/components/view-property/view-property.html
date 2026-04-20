@@ -1,0 +1,157 @@
+<div class="view-property-container">
+  <div class="view-property-header">
+    <h1>Property Details</h1>
+    <button (click)="goBack()" class="btn-back">← Back to My Properties</button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading property details...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Property Details -->
+  <div *ngIf="!loading && !errorMessage && property" class="property-details">
+    <!-- Status Badge -->
+    <div class="status-badge" [ngClass]="property.status === 'ACTIVE' ? 'status-active' : 'status-inactive'">
+      {{ property.status }}
+    </div>
+
+    <!-- Images Gallery -->
+    <div *ngIf="property.images && property.images.length > 0" class="images-gallery">
+      <img *ngFor="let image of property.images" [src]="image" alt="Property image" />
+    </div>
+
+    <!-- Basic Information -->
+    <div class="detail-section">
+      <h2>Basic Information</h2>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Title</span>
+          <span class="detail-value">{{ property.title }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Proprietor Name</span>
+          <span class="detail-value">{{ property.proprietorName }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Mobile Number</span>
+          <span class="detail-value">{{ property.mobileNumber }}</span>
+        </div>
+        <div class="detail-item" *ngIf="property.alternativeMobileNumber">
+          <span class="detail-label">Alternative Mobile</span>
+          <span class="detail-value">{{ property.alternativeMobileNumber }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Email</span>
+          <span class="detail-value">{{ property.email }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Permanent Address</span>
+          <span class="detail-value">{{ property.permanentAddress }}</span>
+        </div>
+        <div class="detail-item full-width">
+          <span class="detail-label">Rental Address</span>
+          <span class="detail-value">{{ property.rentalAddress }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Quick Rent</span>
+          <span class="detail-value">{{ property.quickRent ? 'Yes' : 'No' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Rental Category</span>
+          <span class="detail-value">{{ property.rentalCategory === 'HOSTELS_PG' ? 'Hostels / PG' : 'Vehicles' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rent Durations -->
+    <div class="detail-section">
+      <h2>Rent Durations</h2>
+      <div class="detail-chips">
+        <span *ngFor="let duration of property.rentDurations" class="chip">
+          {{ getRentDurationLabel(duration) }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Hostel/PG Details -->
+    <div class="detail-section" *ngIf="property.rentalCategory === 'HOSTELS_PG'">
+      <h2>Hostel/PG Details</h2>
+      <div class="detail-grid">
+        <div class="detail-item" *ngIf="property.hostelType">
+          <span class="detail-label">Hostel Type</span>
+          <span class="detail-value">{{ getHostelTypeLabel(property.hostelType) }}</span>
+        </div>
+        <div class="detail-item" *ngIf="property.surfaceArea">
+          <span class="detail-label">Surface Area</span>
+          <span class="detail-value">{{ property.surfaceArea }} sq ft</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Bike/Scooter Parking</span>
+          <span class="detail-value">{{ property.parkingBikeScooter ? 'Yes' : 'No' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Car Parking</span>
+          <span class="detail-value">{{ property.parkingCar ? 'Yes' : 'No' }}</span>
+        </div>
+        <div class="detail-item" *ngIf="property.bachelorAllowed !== null && property.bachelorAllowed !== undefined">
+          <span class="detail-label">Bachelor Allowed</span>
+          <span class="detail-value">{{ property.bachelorAllowed ? 'Yes' : 'No' }}</span>
+        </div>
+        <div class="detail-item" *ngIf="property.cctvAvailable !== null && property.cctvAvailable !== undefined">
+          <span class="detail-label">CCTV Available</span>
+          <span class="detail-value">{{ property.cctvAvailable ? 'Yes' : 'No' }}</span>
+        </div>
+        <div class="detail-item" *ngIf="property.lunchDinnerOption">
+          <span class="detail-label">Lunch/Dinner Option</span>
+          <span class="detail-value">{{ getLunchDinnerLabel(property.lunchDinnerOption) }}</span>
+        </div>
+        <div class="detail-item" *ngIf="property.lateNightEntryAllowed !== null && property.lateNightEntryAllowed !== undefined">
+          <span class="detail-label">Late Night Entry</span>
+          <span class="detail-value">{{ property.lateNightEntryAllowed ? 'Yes' : 'No' }}</span>
+        </div>
+        <div class="detail-item full-width" *ngIf="property.nearbyPlaces">
+          <span class="detail-label">Nearby Places</span>
+          <span class="detail-value">{{ property.nearbyPlaces }}</span>
+        </div>
+      </div>
+
+      <!-- Furniture -->
+      <div class="furniture-section" *ngIf="property.furnitureBed || property.furnitureTable || property.furnitureChair || property.furnitureBardrove || property.furnitureAlmirah || property.furnitureKitchenWare">
+        <h3>Furniture Available</h3>
+        <div class="detail-chips">
+          <span *ngIf="property.furnitureBed" class="chip">Bed</span>
+          <span *ngIf="property.furnitureTable" class="chip">Table</span>
+          <span *ngIf="property.furnitureChair" class="chip">Chair</span>
+          <span *ngIf="property.furnitureBardrove" class="chip">Bardrove</span>
+          <span *ngIf="property.furnitureAlmirah" class="chip">Almirah</span>
+          <span *ngIf="property.furnitureKitchenWare" class="chip">Kitchen Ware</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="detail-section">
+      <h2>Description</h2>
+      <p class="description-text">{{ property.description }}</p>
+    </div>
+
+    <!-- Actions -->
+    <div class="detail-actions">
+      <button (click)="editProperty()" class="btn-primary">Edit Property</button>
+      <button (click)="goBack()" class="btn-secondary">Back</button>
+    </div>
+
+    <!-- Metadata -->
+    <div class="property-metadata">
+      <span class="metadata-item">Created: {{ new Date(property.createdAt).toLocaleDateString() }}</span>
+      <span class="metadata-item">Last Updated: {{ new Date(property.updatedAt).toLocaleDateString() }}</span>
+    </div>
+  </div>
+</div>
